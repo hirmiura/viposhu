@@ -16,9 +16,9 @@ classifiers = [
 
 
 [tool.poetry.dependencies]
-python = "3.10.*"
-request5ch = {git = "https://github.com/hirmiura/request5ch"}
-lxml = "^4.9.1"
+python     = "3.10.*"
+request5ch = { git = "https://github.com/hirmiura/request5ch", rev = "main" }
+lxml       = "^4.9.1"
 
 
 [tool.poetry.group.dev.dependencies]
