@@ -309,7 +309,7 @@ requests = "^2.28.1"
 [package.source]
 type = "git"
 url = "https://github.com/hirmiura/request5ch"
-reference = "HEAD"
+reference = "main"
 resolved_reference = "5d458113f066f68809f056f876150b230598c9f5"
 
 [[package]]
@@ -381,7 +381,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.10.*"
-content-hash = "ed50acdb3bba0649d4e7da8ec0553c7a934ef2e41f865cdd7a59675f54076ce9"
+content-hash = "2f65ae2f1cf848d13eabb081af1b37b6dbf4326ff8b2ac23425cf6f0ff80c7dd"
 
 [metadata.files]
 attrs = [
