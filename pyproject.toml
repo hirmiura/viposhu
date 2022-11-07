@@ -1,0 +1,71 @@
+[tool.poetry]
+name = "viposhu"
+version = "0.1.0"
+description = "VIPのスレを保守する為の簡易パッケージ"
+authors = [ "Hiroshi Miura <hirmiura@gmail.com>" ]
+readme = "README.md"
+homepage = "https://github.com/hirmiura/viposhu"
+repository = "https://github.com/hirmiura/viposhu"
+license = "MIT"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+]
+
+
+[tool.poetry.dependencies]
+python = "3.10.*"
+request5ch = {git = "https://github.com/hirmiura/request5ch"}
+lxml = "^4.9.1"
+
+
+[tool.poetry.group.dev.dependencies]
+black               = "^22.10.0"
+pyproject-flake8    = "^5.0.4.post1"
+isort               = "^5.10.1"
+mypy                = "^0.982"
+pytest              = "^7.2.0"
+types-requests      = "^2.28.11.2"
+flake8-pytest-style = "^1.6.0"
+
+
+[build-system]
+requires      = [ "poetry-core" ]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.mypy]
+ignore_missing_imports = true
+no_implicit_optional   = true
+warn_redundant_casts   = true
+warn_unused_ignores    = false
+
+
+[tool.black]
+exclude = '''
+(
+    .mypy_cache
+    | \.git
+    | \.mypy_cache
+    | \.pytest_cache
+    | \.venv
+    | \.vscode
+)
+'''
+line-length = 100
+
+
+[tool.flake8]
+exclude         = [ ".git", ".mypy_cache", ".pytest_cache", ".venv", "__pycache__", "tests/*" ]
+ignore          = "E203,W503"
+max-complexity  = 10
+max-line-length = 100
+
+
+[tool.isort]
+include_trailing_comma = true
+line_length            = 100
+multi_line_output      = 3
+profile                = "black"

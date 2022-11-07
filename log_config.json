@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "simple": {
+      "format": "%(asctime)s.%(msecs)03d %(levelname)s %(message)s",
+      "datefmt": "%H:%M:%S"
+    },
+    "basic": {
+      "format": "%(asctime)s.%(msecs)03d %(levelname)s %(name)s %(module)s:%(lineno)d %(funcName)s: %(message)s",
+      "datefmt": "%Y-%m-%d %H:%M:%S"
+    }
+  },
+  "handlers": {
+    "console_handler": {
+      "class": "logging.StreamHandler",
+      "level": "DEBUG",
+      "formatter": "simple",
+      "stream": "ext://sys.stdout"
+    },
+    "file_handler": {
+      "class": "logging.handlers.TimedRotatingFileHandler",
+      "level": "INFO",
+      "formatter": "basic",
+      "filename": "log/info.log",
+      "when": "MIDNIGHT",
+      "interval": 1,
+      "backupCount": 5,
+      "encoding": "utf-8"
+    },
+    "error_handler": {
+      "class": "logging.handlers.TimedRotatingFileHandler",
+      "level": "ERROR",
+      "formatter": "basic",
+      "filename": "log/error.log",
+      "when": "MIDNIGHT",
+      "interval": 1,
+      "backupCount": 5,
+      "encoding": "utf-8"
+    }
+  },
+  "loggers": {
+    "__main__": {
+      "level": "DEBUG",
+      "handlers": []
+    },
+    "request5ch.request5ch": {
+      "level": "WARN",
+      "handlers": []
+    }
+  },
+  "root": {
+    "level": "DEBUG",
+    "handlers": ["console_handler", "file_handler", "error_handler"]
+  }
+}
