@@ -15,7 +15,7 @@ class Hoshu5chStatus:
     last_check: Optional[datetime] = None
     """最終確認日時"""
 
-    last_post: Optional[datetime] = None
+    last_post_myself: Optional[datetime] = None
     """自身による最終投稿日時"""
 
     last_post_in_thread: Optional[datetime] = None
@@ -44,7 +44,7 @@ class Hoshu5chStatus:
             guard_time_needed: 投稿防止時間(秒)
         """
         ts_lc = self.last_check.timestamp() if self.last_check else 0
-        ts_lp_m = self.last_post.timestamp() if self.last_post else 0
+        ts_lp_m = self.last_post_myself.timestamp() if self.last_post_myself else 0
         ts_lp_t = self.last_post_in_thread.timestamp() if self.last_post_in_thread else 0
         next_lc = ts_lc + interval
         next_lp_m = ts_lp_m + guard_time
@@ -58,4 +58,4 @@ class Hoshu5chStatus:
 
     def clear_datetime(self, sender, earg):
         self.last_check = None
-        self.last_post = None
+        self.last_post_myself = None
