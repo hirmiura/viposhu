@@ -18,11 +18,11 @@ def test_update_last_check(freezer, now):
     s = Hoshu5chStatus()
     assert s
     assert s.last_check is None
-    assert s.last_post is None
+    assert s.last_post_myself is None
     freezer.move_to(now)
     s.update_last_check()
     assert s.last_check == now
-    assert s.last_post is None
+    assert s.last_post_myself is None
 
 
 @pytest.mark.parametrize(("now"), now_list)
@@ -30,11 +30,11 @@ def test_update_last_post(freezer, now):
     s = Hoshu5chStatus()
     assert s
     assert s.last_check is None
-    assert s.last_post is None
+    assert s.last_post_myself is None
     freezer.move_to(now)
     s.update_last_post()
     assert s.last_check is None
-    assert s.last_post == now
+    assert s.last_post_myself == now
 
 
 data_for_get_interval_to_next_check1 = [
@@ -60,7 +60,7 @@ def test_get_interval_to_next_check1(freezer, interval, guard_time, now, expecte
     s = Hoshu5chStatus()
     assert s
     assert s.last_check is None
-    assert s.last_post is None
+    assert s.last_post_myself is None
     freezer.move_to(now)
     assert s.get_interval_to_next_check(interval, guard_time) == expected
 
@@ -88,11 +88,11 @@ def test_get_interval_to_next_check2(freezer, interval, guard_time, now, expecte
     s = Hoshu5chStatus()
     assert s
     assert s.last_check is None
-    assert s.last_post is None
+    assert s.last_post_myself is None
     freezer.move_to(now)
     s.update_last_check()
     assert s.last_check == now
-    assert s.last_post is None
+    assert s.last_post_myself is None
     assert s.get_interval_to_next_check(interval, guard_time) == expected
 
 
@@ -119,11 +119,11 @@ def test_get_interval_to_next_check3(freezer, interval, guard_time, now, expecte
     s = Hoshu5chStatus()
     assert s
     assert s.last_check is None
-    assert s.last_post is None
+    assert s.last_post_myself is None
     freezer.move_to(now)
     s.update_last_post()
     assert s.last_check is None
-    assert s.last_post == now
+    assert s.last_post_myself == now
     assert s.get_interval_to_next_check(interval, guard_time) == expected
 
 
@@ -150,10 +150,10 @@ def test_get_interval_to_next_check4(freezer, interval, guard_time, now, expecte
     s = Hoshu5chStatus()
     assert s
     assert s.last_check is None
-    assert s.last_post is None
+    assert s.last_post_myself is None
     freezer.move_to(now)
     s.update_last_check()
     s.update_last_post()
     assert s.last_check == now
-    assert s.last_post == now
+    assert s.last_post_myself == now
     assert s.get_interval_to_next_check(interval, guard_time) == expected

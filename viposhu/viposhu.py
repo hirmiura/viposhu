@@ -173,6 +173,6 @@ class VIPoshu(tk.Frame):
 
     def eh_last_post_got_from_thread(self, sender, earg):
         # 最終投稿
-        ho5 = sender
-        dtstr = ho5.last_post_in_thread.strftime("%Y-%m-%d %H:%M:%S")
-        self.lpdtStrVar.set(dtstr)
+        status = self.hoshu5ch.status
+        dstr = status.last_post_in_thread.strftime("%Y-%m-%d %H:%M:%S")
+        self.lpdtStrVar.set(dstr)
