@@ -18,6 +18,9 @@ class Hoshu5chStatus:
     last_post: Optional[datetime] = None
     """自身による最終投稿日時"""
 
+    last_post_in_thread: Optional[datetime] = None
+    """スレ内の最終投稿日時"""
+
     def _update_X(self, varname: str, now: Optional[datetime] = None) -> datetime:
         if not now:
             now = datetime.now(JST)
@@ -29,6 +32,9 @@ class Hoshu5chStatus:
 
     def update_last_post(self, now: Optional[datetime] = None) -> datetime:
         return self._update_X("last_post", now)
+
+    def update_last_post_in_thread(self, now: Optional[datetime] = None) -> datetime:
+        return self._update_X("last_post_in_thread", now)
 
     def get_interval_to_next_check(self, interval: int, guard_time: int) -> int:
         """次にチェックする時間を秒で返す
