@@ -43,14 +43,17 @@ class Hoshu5chStatus:
             interval_needed: 通常のチェック間隔(秒)
             guard_time_needed: 投稿防止時間(秒)
         """
-        ts_itv = self.last_check.timestamp() if self.last_check else 0
-        ts_grd = self.last_post.timestamp() if self.last_post else 0
-        next_itv = ts_itv + interval
-        next_grd = ts_grd + guard_time
+        ts_lc = self.last_check.timestamp() if self.last_check else 0
+        ts_lp_m = self.last_post.timestamp() if self.last_post else 0
+        ts_lp_t = self.last_post_in_thread.timestamp() if self.last_post_in_thread else 0
+        next_lc = ts_lc + interval
+        next_lp_m = ts_lp_m + guard_time
+        next_lp_t = ts_lp_t + guard_time
         ts_now = datetime.now(JST).timestamp()
-        delta_itv = next_itv - ts_now
-        delta_grd = next_grd - ts_now
-        delta_to_next = max(delta_itv, delta_grd)
+        delta_lc = next_lc - ts_now
+        delta_lp_m = next_lp_m - ts_now
+        delta_lp_t = next_lp_t - ts_now
+        delta_to_next = max(delta_lc, delta_lp_m, delta_lp_t)
         return int(delta_to_next)
 
     def clear_datetime(self, sender, earg):
