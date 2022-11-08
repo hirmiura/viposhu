@@ -142,9 +142,9 @@ class Hoshu5ch:
         if dstr != "Over 1000":
             dstr = re.sub(r"\(.+\)", "", dstr) + " +0900"  # 曜日を消してUTCオフセットを付ける
             last_post_dt = datetime.strptime(dstr, "%Y/%m/%d %H:%M:%S.%f %z")
+            self.status.update_last_post_in_thread(last_post_dt)
         else:
-            last_post_dt = datetime.max
-        self.last_post_in_thread = last_post_dt  # 表示用に保存しておく
+            self.status.update_last_post_in_thread(datetime.max)
 
         if dstr == "Over 1000":
             raise ThreadOver1000(urlobj.thread_url)
