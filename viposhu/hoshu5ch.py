@@ -86,7 +86,7 @@ class Hoshu5ch:
         self.subject = subj
 
         # subject.txt内で対象スレを検索する
-        tindex = subj.search(urlobj.tid)
+        tindex = subj.search_index(urlobj.tid)
         if not tindex:
             # スレが見つからなければ例外を投げる
             logger.warn("subject.txtに目的のスレッドが見つかりませんでした")
