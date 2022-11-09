@@ -77,14 +77,14 @@ class Hoshu5ch:
         urlobj = self.config.url
         req5ch = Request5ch(urlobj.thread_url)
         logger.debug("subject.txtを取得しています")
-        subj = req5ch.get_subject()
+        subj, res = req5ch.get_subject()
         if not subj:
             # subject.txtが取得できなければ例外を投げる
             logger.error("subject.txtが見つかりませんでした")
             self.evt_show_status_message("subject.txtが見つかりませんでした")  # type: ignore
             raise SubjectNotFetched(urlobj.thread_url)
         logger.info("subject.txtを取得しました")
-        self.subject, res = subj
+        self.subject = subj
         # デバッグ用にレスポンスを保存する
         sp = Path("log/subject" + datetime.now(JST).strftime("%Y%m%d%H%M%S.%f.txt"))
         sp.write_text(res.text, encoding="utf-8")
