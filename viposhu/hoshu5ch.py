@@ -1,11 +1,12 @@
 #!/usr/bin/env -S python3
 # SPDX-License-Identifier: MIT
 # Copyright 2022 hirmiura <https://github.com/hirmiura>
+import logging as lg
 import random
 import re
 from datetime import datetime
 from logging import getLogger
-from pathlib import Path
+from logging.handlers import RotatingFileHandler
 from typing import Optional
 
 import lxml.html
@@ -17,6 +18,11 @@ from .hoshu5ch_config import Hoshu5chConfig
 from .hoshu5ch_status import JST, Hoshu5chStatus
 
 logger = getLogger(__name__)
+logger_sbj = getLogger("subject.txt")
+logger_sbj.setLevel(lg.DEBUG)
+handler_sbj = RotatingFileHandler("log/subject.txt", backupCount=5)
+logger_sbj.addHandler(handler_sbj)
+logger_sbj.propagate = False
 
 
 class Hoshu5ch:
@@ -86,8 +92,8 @@ class Hoshu5ch:
         logger.info("subject.txtを取得しました")
         self.subject = subj
         # デバッグ用にレスポンスを保存する
-        sp = Path("log/subject" + datetime.now(JST).strftime("%Y%m%d%H%M%S.%f.txt"))
-        sp.write_text(res.text, encoding="utf-8")
+        logger_sbj.debug(res.text)
+        handler_sbj.doRollover()
 
         # subject.txt内で対象スレを検索する
         tindex = subj.search_index(urlobj.tid)
