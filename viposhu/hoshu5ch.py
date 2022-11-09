@@ -95,6 +95,10 @@ class Hoshu5ch:
         logger_sbj.debug(res.text)
         handler_sbj.doRollover()
 
+        # subject.txtが空であればPOSTと被っているのでスルーする
+        if subj.total_count == 0:
+            return True
+
         # subject.txt内で対象スレを検索する
         tindex = subj.search_index(urlobj.tid)
         if not tindex:
