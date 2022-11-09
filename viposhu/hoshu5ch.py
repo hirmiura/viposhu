@@ -5,6 +5,7 @@ import random
 import re
 from datetime import datetime
 from logging import getLogger
+from pathlib import Path
 from typing import Optional
 
 import lxml.html
@@ -83,7 +84,10 @@ class Hoshu5ch:
             self.evt_show_status_message("subject.txtが見つかりませんでした")  # type: ignore
             raise SubjectNotFetched(urlobj.thread_url)
         logger.info("subject.txtを取得しました")
-        self.subject = subj
+        self.subject, res = subj
+        # デバッグ用にレスポンスを保存する
+        sp = Path("log/subject" + datetime.now(JST).strftime("%Y%m%d%H%M%S.%f.txt"))
+        sp.write_text(res.text, encoding="utf-8")
 
         # subject.txt内で対象スレを検索する
         tindex = subj.search_index(urlobj.tid)
