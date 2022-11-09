@@ -1,10 +1,12 @@
 #!/usr/bin/env -S python3
 # SPDX-License-Identifier: MIT
 # Copyright 2022 hirmiura <https://github.com/hirmiura>
+import logging as lg
 import random
 import re
 from datetime import datetime
 from logging import getLogger
+from logging.handlers import RotatingFileHandler
 from typing import Optional
 
 import lxml.html
@@ -16,6 +18,11 @@ from .hoshu5ch_config import Hoshu5chConfig
 from .hoshu5ch_status import JST, Hoshu5chStatus
 
 logger = getLogger(__name__)
+logger_sbj = getLogger("subject.txt")
+logger_sbj.setLevel(lg.DEBUG)
+handler_sbj = RotatingFileHandler("log/subject.txt", backupCount=5)
+logger_sbj.addHandler(handler_sbj)
+logger_sbj.propagate = False
 
 
 class Hoshu5ch:
@@ -76,7 +83,7 @@ class Hoshu5ch:
         urlobj = self.config.url
         req5ch = Request5ch(urlobj.thread_url)
         logger.debug("subject.txtを取得しています")
-        subj = req5ch.get_subject()
+        subj, res = req5ch.get_subject()
         if not subj:
             # subject.txtが取得できなければ例外を投げる
             logger.error("subject.txtが見つかりませんでした")
@@ -84,6 +91,13 @@ class Hoshu5ch:
             raise SubjectNotFetched(urlobj.thread_url)
         logger.info("subject.txtを取得しました")
         self.subject = subj
+        # デバッグ用にレスポンスを保存する
+        logger_sbj.debug(res.text)
+        handler_sbj.doRollover()
+
+        # subject.txtが空であればPOSTと被っているのでスルーする
+        if subj.total_count == 0:
+            return True
 
         # subject.txt内で対象スレを検索する
         tindex = subj.search_index(urlobj.tid)
